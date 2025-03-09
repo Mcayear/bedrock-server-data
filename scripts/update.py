@@ -127,7 +127,7 @@ def process(build_type: BuildType, platform: Platform):
 
     metadata["binary"][platform.value] = {
         "url": url,
-        "checksum": checksum,
+        "sha256": checksum,
     }
 
     with metadata_path.open(mode="w") as f:
