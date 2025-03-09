@@ -31,7 +31,19 @@ jobs:
       - name: Run script
         run: python scripts/update.py
 
+      - name: Check for Changes
+        id: check_changes
+        run: |
+          if [[ -n "$(git diff --exit-code)" ]]; then
+            echo "Changes detected."
+            echo "::set-output name=value::true"
+          else
+            echo "No changes detected."
+            echo "::set-output name=value::false"
+          fi
+
       - name: Commit changes
+        if: steps.check_changes.outputs.value == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
