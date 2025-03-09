@@ -1,7 +1,7 @@
 # 📦 Bedrock Server Data
 
 This repository contains structured metadata and dumped data for **Minecraft: Bedrock Dedicated Server** versions,
-including stable **release** and **preview** builds. Each version is organized with metadata containing download links,
+including **stable** and **preview** builds. Each version is organized with metadata containing download links,
 hashes, and relevant details, as well as extracted game data such as **block palette**, **item tags**, **creative items
 **, and more.
 
@@ -9,7 +9,7 @@ hashes, and relevant details, as well as extracted game data such as **block pal
 
 ```
 📦 bedrock-server-data
-├── 📂 release
+├── 📂 stable
 │   ├── 📂 1.20.70
 │   │   ├── 📜 metadata.json
 │   │   ├── 📜 block_palette.json
@@ -65,7 +65,7 @@ This file contains a centralized registry of available versions.
 
 ```json
 {
-  "release": {
+  "stable": {
     "latest": "1.21.70",
     "versions": [
       "1.21.70",
