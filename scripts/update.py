@@ -13,7 +13,7 @@ from tqdm import tqdm
 
 
 class BuildType(Enum):
-    STABLE = "stable"
+    RELEASE = "release"
     PREVIEW = "preview"
 
 
@@ -33,8 +33,8 @@ def get_download_url(build_type: BuildType, platform: Platform) -> str:
     soup = BeautifulSoup(response.content, "html.parser")
 
     platform_map = {
-        (BuildType.STABLE, Platform.WINDOWS): "serverBedrockWindows",
-        (BuildType.STABLE, Platform.LINUX): "serverBedrockLinux",
+        (BuildType.RELEASE, Platform.WINDOWS): "serverBedrockWindows",
+        (BuildType.RELEASE, Platform.LINUX): "serverBedrockLinux",
         (BuildType.PREVIEW, Platform.WINDOWS): "serverBedrockPreviewWindows",
         (BuildType.PREVIEW, Platform.LINUX): "serverBedrockPreviewLinux",
     }
@@ -79,7 +79,7 @@ def update_versions_file(build_type: BuildType, version: str):
         with version_file.open(mode="r") as f:
             data = json.load(f)
     else:
-        data = {"stable": {"latest": "", "versions": []}, "preview": {"latest": "", "versions": []}}
+        data = {"release": {"latest": "", "versions": []}, "preview": {"latest": "", "versions": []}}
 
     versions_list = data[build_type.value]["versions"]
     if version not in versions_list:
@@ -103,7 +103,7 @@ def process(build_type: BuildType, platform: Platform):
 
     version_parts = Version(match.group(1)).release
     version = "{}.{}.{}{}".format(
-        *version_parts[:3], "" if build_type == BuildType.STABLE else f"-beta.{version_parts[3]}"
+        *version_parts[:3], "" if build_type == BuildType.RELEASE else f"-beta.{version_parts[3]}"
     )
 
     with TemporaryDirectory() as tmp:
