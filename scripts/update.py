@@ -73,17 +73,30 @@ def compute_checksum(filename):
     return hashlib.sha256(file_data).hexdigest()
 
 
-def save_metadata(
-        version, category, windows_url, linux_url, windows_sha256, linux_sha256
-):
-    version_dir = (DATA_DIR if category == BuildType.STABLE else PREVIEW_DIR) / version
+def update_versions_file(build_type: BuildType, version: str):
+    version_file = Path("versions.json")
+    if version_file.exists():
+        with version_file.open(mode="r") as f:
+            data = json.load(f)
+    else:
+        data = {"stable": {"latest": "", "versions": []}, "preview": {"latest": "", "versions": []}}
+
+    versions_list = data[build_type.value]["versions"]
+    if version not in versions_list:
+        versions_list.insert(0, version)  # Add new version at the beginning
+        data[build_type.value]["latest"] = version  # Update latest
+
+    with version_file.open(mode="w") as f:
+        json.dump(data, f, indent=2)
+
+    logging.info(f"Updated {version_file} with version {version} for {build_type.value}")
 
 
 def process(build_type: BuildType, platform: Platform):
     logging.info(f"Processing {build_type.value} build for {platform.value}...")
     url = get_download_url(build_type, platform)
 
-    regex = r"bedrock-server-(\d+\.\d+(\.\d+){1,2})\.zip"
+    regex = r"bedrock-server-(\d+\.\d+(?:\.\d+){1,2})\.zip"
     match = re.search(regex, url)
     if not match:
         raise ValueError("Unable to extract version from URL")
@@ -121,6 +134,8 @@ def process(build_type: BuildType, platform: Platform):
         json.dump(metadata, f, indent=2)
 
     logging.info(f"Saved metadata for {version} in {metadata_path}")
+
+    update_versions_file(build_type, version)
     return version
 
 

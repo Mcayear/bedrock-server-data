@@ -1,0 +1,14 @@
+{
+  "stable": {
+    "latest": "1.21.62",
+    "versions": [
+      "1.21.62"
+    ]
+  },
+  "preview": {
+    "latest": "1.21.70-beta.26",
+    "versions": [
+      "1.21.70-beta.26"
+    ]
+  }
+}
