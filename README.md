@@ -18,14 +18,14 @@ hashes, and relevant details, as well as extracted game data such as **block pal
 │   ├── 📂 ...
 │   └── 🔗 latest -> 1.20.50          # Symlink/reference to the latest release version
 ├── 📂 preview
-│   ├── 📂 1.21.70-beta.26
+│   ├── 📂 1.21.70-preview.26
 │   │   ├── 📜 metadata.json
 │   │   └── ...
 │   ├── 📂 ...
-│   └── 🔗 latest -> 1.21.70-beta.26  # Symlink/reference to the latest preview version
+│   └── 🔗 latest -> 1.21.70-preview.26  # Symlink/reference to the latest preview version
 ├── 📂 scripts
 │   └── 📝 update.py
-├── 📜 versions.json                  # A centralized file listing all versions and metadata
+├── 📜 versions.json                     # A centralized file listing all versions and metadata
 ├── 📜 README.md
 └── 📜 .gitignore
 ```
@@ -36,7 +36,7 @@ Each version has a `metadata.json` file with the following structure:
 
 ```json
 {
-  "version": "1.21.70-beta.26",
+  "version": "1.21.70-preview.26",
   "binary": {
     "windows": {
       "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-win-preview/bedrock-server-1.21.70.26.zip",
@@ -73,10 +73,10 @@ This file contains a centralized registry of available versions.
     ]
   },
   "preview": {
-    "latest": "1.21.70-beta.26",
+    "latest": "1.21.70-preview.26",
     "versions": [
-      "1.21.70-beta.26",
-      "1.21.70-beta.23"
+      "1.21.70-preview.26",
+      "1.21.70-preview.23"
     ]
   }
 }

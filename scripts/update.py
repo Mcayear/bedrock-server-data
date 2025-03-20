@@ -103,7 +103,7 @@ def process(build_type: BuildType, platform: Platform):
 
     version_parts = Version(match.group(1)).release
     version = "{}.{}.{}{}".format(
-        *version_parts[:3], "" if build_type == BuildType.RELEASE else f"-beta.{version_parts[3]}"
+        *version_parts[:3], "" if build_type == BuildType.RELEASE else f"-preview.{version_parts[3]}"
     )
 
     with TemporaryDirectory() as tmp:

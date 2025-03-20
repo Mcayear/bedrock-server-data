@@ -1,5 +1,5 @@
 {
-  "version": "1.21.80-beta.21",
+  "version": "1.21.80-preview.21",
   "binary": {
     "windows": {
       "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-win-preview/bedrock-server-1.21.80.21.zip",
