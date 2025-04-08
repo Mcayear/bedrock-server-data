@@ -1,15 +1,17 @@
 {
   "release": {
-    "latest": "1.21.71",
+    "latest": "1.21.72",
     "versions": [
+      "1.21.72",
       "1.21.71",
       "1.21.70",
       "1.21.62"
     ]
   },
   "preview": {
-    "latest": "1.21.80-preview.26",
+    "latest": "1.21.80-preview.27",
     "versions": [
+      "1.21.80-preview.27",
       "1.21.80-preview.26",
       "1.21.80-preview.22",
       "1.21.80-preview.21",
