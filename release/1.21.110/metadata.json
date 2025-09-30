@@ -1,0 +1,9 @@
+{
+  "version": "1.21.110",
+  "binary": {
+    "linux": {
+      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-1.21.110.2.zip",
+      "sha256": "3cced088174db37fb737cb91e107d2c1523ae39f06aeb040e23a617c2bdab4e5"
+    }
+  }
+}
