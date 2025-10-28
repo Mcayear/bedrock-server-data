@@ -1,0 +1,9 @@
+{
+  "version": "1.21.120",
+  "binary": {
+    "windows": {
+      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-win/bedrock-server-1.21.120.4.zip",
+      "sha256": "43369c7368b03b9d0174dbad72c8be6b4e26bdf4a2491f6d7595efed09449e1f"
+    }
+  }
+}
