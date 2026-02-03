@@ -1,0 +1,9 @@
+{
+  "version": "1.26.10-preview.21",
+  "binary": {
+    "linux": {
+      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-linux-preview/bedrock-server-1.26.10.21.zip",
+      "sha256": "a3875e878f6918dad4ca93cc7c489aa1a33c86bf3ecbc76206ff4c56ba1c3ef7"
+    }
+  }
+}
