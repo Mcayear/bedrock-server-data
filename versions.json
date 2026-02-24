@@ -39,8 +39,9 @@
     ]
   },
   "preview": {
-    "latest": "1.26.10-preview.24",
+    "latest": "1.26.10-preview.25",
     "versions": [
+      "1.26.10-preview.25",
       "1.26.10-preview.24",
       "1.26.10-preview.23",
       "1.26.10-preview.21",
