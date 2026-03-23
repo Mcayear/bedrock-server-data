@@ -1,93 +1,74 @@
-# 📦 Bedrock Server Data
+# Bedrock Server Data
 
-This repository contains structured metadata and dumped data for **Minecraft: Bedrock Dedicated Server** versions,
-including **release** and **preview** builds. Each version is organized with metadata containing download links,
-hashes, and relevant details, as well as extracted game data such as **block palette**, **item tags**, **creative items
-**, and more.
+Structured metadata for Minecraft Bedrock Dedicated Server versions, including release and
+preview builds. Each version entry contains download URLs and SHA256 hashes for Windows and
+Linux binaries.
 
-## 📂 Repository Structure
+Used by [Endstone](https://github.com/EndstoneMC/endstone) tooling (e.g.
+[bedrock-dumper](https://github.com/EndstoneMC/bedrock-dumper)) to download specific BDS
+versions.
+
+## Repository Structure
 
 ```
-📦 bedrock-server-data
-├── 📂 release
-│   ├── 📂 1.20.70
-│   │   ├── 📜 metadata.json
-│   │   ├── 📜 block_palette.json
-│   │   ├── 📜 item_tags.json
-│   │   └── 📜 creative_items.json
-│   ├── 📂 ...
-│   └── 🔗 latest -> 1.20.50          # Symlink/reference to the latest release version
-├── 📂 preview
-│   ├── 📂 1.21.70-preview.26
-│   │   ├── 📜 metadata.json
-│   │   └── ...
-│   ├── 📂 ...
-│   └── 🔗 latest -> 1.21.70-preview.26  # Symlink/reference to the latest preview version
-├── 📂 scripts
-│   └── 📝 update.py
-├── 📜 versions.json                     # A centralized file listing all versions and metadata
-├── 📜 README.md
-└── 📜 .gitignore
+release/
+  1.21.84/
+    metadata.json       Download URLs and SHA256 hashes
+  ...
+
+preview/
+  1.21.100-preview.20/
+    metadata.json
+  ...
+
+versions.json           Centralized registry of all available versions
+scripts/
+  update.py             Automated updater (fetches new versions from Mojang)
+  requirements.txt
 ```
 
-## 📜 Metadata Format (`metadata.json`)
+## Metadata Format
 
-Each version has a `metadata.json` file with the following structure:
+Each version has a `metadata.json`:
 
 ```json
 {
-  "version": "1.21.70-preview.26",
+  "version": "1.21.84",
   "binary": {
     "windows": {
-      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-win-preview/bedrock-server-1.21.70.26.zip",
-      "sha256": "746e99e494a77eea61fe6e4f30023d3370c7d0ad3d73c6d6dae9de5e483a87c0"
+      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-win/bedrock-server-1.21.84.1.zip",
+      "sha256": "a63ddc9e32641fe27531fe33315a47b366c67931deececadab142163ddb490a3"
     },
     "linux": {
-      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-linux-preview/bedrock-server-1.21.70.26.zip",
-      "sha256": "cce936ff72f1061d8b92b4a00955f3e0348f807ba1da040f0dd9130278d22d95"
+      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-1.21.84.1.zip",
+      "sha256": "c0622b396fb12286c1d86d10a8d90e2e474ae9bd6668a83cfd15f2c6304a83ba"
     }
   }
 }
 ```
 
-## 📂 Extracted Game Data
+## Version Registry
 
-Each version contains extracted game data alongside its `metadata.json` file.
-
-- **`block_palette.json`** – Lists all registered blocks and their properties.
-- **`item_tags.json`** – Contains tag information for different items.
-- **`creative_items.json`** – Represents the creative inventory layout.
-- (More data files may be added as needed.)
-
-## 📜 `versions.json`
-
-This file contains a centralized registry of available versions.
+`versions.json` lists all available versions:
 
 ```json
 {
   "release": {
-    "latest": "1.21.70",
-    "versions": [
-      "1.21.70",
-      "1.21.61"
-    ]
+    "latest": "1.21.84",
+    "versions": ["1.21.84", "1.21.83", "..."]
   },
   "preview": {
-    "latest": "1.21.70-preview.26",
-    "versions": [
-      "1.21.70-preview.26",
-      "1.21.70-preview.23"
-    ]
+    "latest": "1.21.100-preview.20",
+    "versions": ["1.21.100-preview.20", "..."]
   }
 }
 ```
 
-## 🎯 Contribution
+## Automatic Updates
 
-If you want to contribute by adding new metadata, extracted data, or improving scripts, feel free to open an issue or
-submit a PR!
+The `update.yml` workflow runs daily, fetches the latest BDS download links from Mojang,
+computes SHA256 hashes, and commits any new versions automatically.
 
-## 📄 License
+## License
 
-This repository is licensed under MIT.
-
+[MIT License](LICENSE)
