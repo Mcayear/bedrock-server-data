@@ -18,6 +18,7 @@ FULL_URL = f"{BASE_URL}{API_PATH}"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0"
 }
+LINUX_MIRROR_BASE_URL = "https://repo.res.nullatom.com/Minecraft/Server/BDS/Linux/"
 
 
 class ServerType(str, Enum):
@@ -131,6 +132,13 @@ def derive_other_platform_url(url: str) -> str:
     raise ValueError(f"Unable to derive other platform URL from: {url}")
 
 
+def metadata_download_url(server_type: ServerType, url: str) -> str:
+    """Use the mirror URL for Linux metadata while downloading from the source URL."""
+    if server_type.platform == "linux":
+        return f"{LINUX_MIRROR_BASE_URL}{url.rsplit('/', 1)[-1]}"
+    return str(url)
+
+
 def resolve_server_type(channel: str, platform: str) -> ServerType:
     """Resolve a ServerType from channel and platform strings."""
     mapping = {
@@ -175,7 +183,7 @@ def process(server_type: ServerType, url: str):
         metadata["binary"] = {}
 
     metadata["binary"][server_type.platform] = {
-        "url": url,
+        "url": metadata_download_url(server_type, url),
         "sha256": checksum,
     }
 

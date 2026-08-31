@@ -2,7 +2,7 @@
   "version": "1.21.72",
   "binary": {
     "linux": {
-      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-1.21.72.01.zip",
+      "url": "https://repo.res.nullatom.com/Minecraft/Server/BDS/Linux/bedrock-server-1.21.72.01.zip",
       "sha256": "bc42f5c2debae5df3aa9107fb51d326c83d734fd66afd8f1186bffe0806f06f9"
     },
     "windows": {

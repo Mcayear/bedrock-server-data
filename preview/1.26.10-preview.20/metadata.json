@@ -2,7 +2,7 @@
   "version": "1.26.10-preview.20",
   "binary": {
     "linux": {
-      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-linux-preview/bedrock-server-1.26.10.20.zip",
+      "url": "https://repo.res.nullatom.com/Minecraft/Server/BDS/Linux/bedrock-server-1.26.10.20.zip",
       "sha256": "adf3569fb692b3f46906382f745ff769c06d4c3a41f42dfc1198eda71dd09ec2"
     },
     "windows": {
