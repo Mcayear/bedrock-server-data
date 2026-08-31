@@ -1,0 +1,13 @@
+{
+  "version": "1.26.30-preview.25",
+  "binary": {
+    "windows": {
+      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-win-preview/bedrock-server-1.26.30.25.zip",
+      "sha256": "af9b0f04e09ca9cb726417a9db2cd88b178d8cdd37e9642826c22d4a92458534"
+    },
+    "linux": {
+      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-linux-preview/bedrock-server-1.26.30.25.zip",
+      "sha256": "29f763f5ac2615fe5104130db58e3c2c7dc192651f593bf05eee8a7f214767e1"
+    }
+  }
+}

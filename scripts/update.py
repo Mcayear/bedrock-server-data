@@ -73,6 +73,7 @@ def get_download_links() -> dict[ServerType, HttpUrl]:
 def download_file(url, filename):
     logging.info(f"Downloading from {url} to {filename}")
     response = requests.get(url, stream=True, allow_redirects=True, headers=HEADERS)
+    response.raise_for_status()
     total_size_in_bytes = int(response.headers.get("content-length", 0))
     block_size = 8192
 
@@ -113,6 +114,32 @@ def update_versions_file(server_type: ServerType, version: str):
         json.dump(data, f, indent=2)
 
     logging.info(f"Updated {version_file} with version {version} for {server_type.value}")
+
+
+def derive_other_platform_url(url: str) -> str:
+    """Derive the other platform's download URL from an existing one."""
+    # Check preview variants first to avoid partial matching
+    replacements = [
+        ("bin-win-preview", "bin-linux-preview"),
+        ("bin-linux-preview", "bin-win-preview"),
+        ("bin-win", "bin-linux"),
+        ("bin-linux", "bin-win"),
+    ]
+    for old, new in replacements:
+        if old in url:
+            return url.replace(old, new, 1)
+    raise ValueError(f"Unable to derive other platform URL from: {url}")
+
+
+def resolve_server_type(channel: str, platform: str) -> ServerType:
+    """Resolve a ServerType from channel and platform strings."""
+    mapping = {
+        ("release", "windows"): ServerType.SERVER_BEDROCK_WINDOWS,
+        ("release", "linux"): ServerType.SERVER_BEDROCK_LINUX,
+        ("preview", "windows"): ServerType.SERVER_BEDROCK_PREVIEW_WINDOWS,
+        ("preview", "linux"): ServerType.SERVER_BEDROCK_PREVIEW_LINUX,
+    }
+    return mapping[(channel, platform)]
 
 
 def process(server_type: ServerType, url: str):
@@ -161,6 +188,60 @@ def process(server_type: ServerType, url: str):
     return version
 
 
+def backfill_missing_platforms():
+    """Scan existing metadata and fill in any missing platform binaries."""
+    for channel in ("release", "preview"):
+        channel_dir = Path(".") / channel
+        if not channel_dir.exists():
+            continue
+
+        for version_dir in sorted(channel_dir.iterdir()):
+            metadata_path = version_dir / "metadata.json"
+            if not metadata_path.exists():
+                continue
+
+            with metadata_path.open(mode="r") as f:
+                metadata = json.load(f)
+
+            binary = metadata.get("binary", {})
+            present = set(binary.keys())
+            missing = {"windows", "linux"} - present
+
+            if not missing:
+                continue
+
+            if not present:
+                logging.warning(f"No platforms in {metadata_path}, skipping")
+                continue
+
+            existing_platform = next(iter(present))
+            existing_url = binary[existing_platform]["url"]
+
+            for missing_platform in missing:
+                derived_url = derive_other_platform_url(existing_url)
+                server_type = resolve_server_type(channel, missing_platform)
+
+                logging.info(
+                    f"Backfill: {channel}/{version_dir.name} missing {missing_platform}, "
+                    f"trying {derived_url}"
+                )
+
+                try:
+                    head = requests.head(derived_url, headers=HEADERS, allow_redirects=True)
+                    if head.status_code != 200:
+                        logging.warning(
+                            f"Backfill: {derived_url} returned {head.status_code}, skipping"
+                        )
+                        continue
+
+                    process(server_type, derived_url)
+                    logging.info(f"Backfill: filled {missing_platform} for {version_dir.name}")
+                except Exception as e:
+                    logging.warning(
+                        f"Backfill: failed to fill {missing_platform} for {version_dir.name}: {e}"
+                    )
+
+
 def main():
     logging.basicConfig(level=logging.INFO)
 
@@ -173,6 +254,8 @@ def main():
         logging.info(
             f"Processed version: {version} ({server_type.value})"
         )
+
+    backfill_missing_platforms()
 
 
 if __name__ == "__main__":
