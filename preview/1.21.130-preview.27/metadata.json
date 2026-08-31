@@ -6,7 +6,7 @@
       "sha256": "ba77a72781e97847d7caea30bfb858471b47165e8652603f47a9e53f09bf7269"
     },
     "linux": {
-      "url": "https://repo.res.nullatom.com/Minecraft/Server/BDS/Linux/bedrock-server-1.21.130.27.zip",
+      "url": "https://www.minecraft.net/bedrockdedicatedserver/bin-linux-preview/bedrock-server-1.21.130.27.zip",
       "sha256": "a3b30f702c9cab281260f917b51dfa31ef7bab0ed9e76e3c047e95c30876abb0"
     }
   }
